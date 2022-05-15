@@ -56,7 +56,7 @@ export default function BlocksTable() {
     return (
         <table>
             <thead>
-                <tr>
+                <tr className="table-head">
                     <th>Block</th>
                     <th>Age</th>
                     <th>Txn</th>
