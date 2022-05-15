@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import './block.css'
 import Web3 from "web3"
+import { block } from "strip-comments"
 
-export default function BlockInfo() {
+export default function BlocksTable() {
     const provider = new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/0f485d121a0f4dc2ad3891e12cb2c626")
     const web3 = new Web3(provider)
 
@@ -23,11 +24,25 @@ export default function BlockInfo() {
         getBlockData()
     }, [])
 
+    function calculateTimeDifference(blockTime) {
+        /** Divide by 1000 to match block.timestamp format which is in seconds */
+        const currentTime = Date.now() / 1000
+
+        const seconds = currentTime - blockTime
+
+        if (seconds > 60) {
+            const minutes = Math.floor((currentTime - blockTime) / 60)
+            return `${minutes} min${minutes > 1 ? "s" : ""} ago`
+        } else {
+            return `${Math.floor(seconds)} seconds ago`
+        }
+    }
+
     function displayBlockRows() {
         const rowElements = blockData.map((block, i) =>
             <tr key={block.number}>
                 <td>{block.number}</td>
-                <td>{block.timestamp}</td>
+                <td>{calculateTimeDifference(block.timestamp)}</td>
                 <td>{block.transactions.length}</td>
                 <td>{block.uncles.length}</td>
                 <td>{block.miner}</td>
