@@ -27,3 +27,8 @@ table{
   margin-right: 1rem;
   text-align: center;
 }
+
+.loader-img{
+  height: 10rem;
+  width: 10rem;
+}

@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react"
 import './block.css'
 import Web3 from "web3"
 import { block } from "strip-comments"
+import loader from "./loader.svg"
 
 export default function BlocksTable() {
     const provider = new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/0f485d121a0f4dc2ad3891e12cb2c626")
     const web3 = new Web3(provider)
 
     const [blockData, setBlockData] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         async function getBlockData() {
+            setIsLoading(true)
             const latestBlockNumber = await (await web3.eth.getBlock("latest")).number
             console.log("latest block number is: ", latestBlockNumber)
             const blockDataArray = []
@@ -20,6 +23,7 @@ export default function BlocksTable() {
             }
             console.log(blockDataArray)
             setBlockData(blockDataArray)
+            setIsLoading(false)
         }
         getBlockData()
     }, [])
@@ -53,23 +57,28 @@ export default function BlocksTable() {
 
         return rowElements
     }
+
     return (
-        <table>
-            <thead>
-                <tr className="table-head">
-                    <th>Block</th>
-                    <th>Age</th>
-                    <th>Txn</th>
-                    <th>Uncles</th>
-                    <th>Miner</th>
-                    <th>Gas Used</th>
-                    <th>Gas Limit</th>
-                    <th>Base Fee</th>
-                </tr>
-            </thead>
-            <tbody>
-                {displayBlockRows()}
-            </tbody>
-        </table>
+        <div className="blocks-table">
+            {isLoading ? <img className="loader-img" src={`${loader}`} />
+                : <table>
+                    <thead>
+                        <tr className="table-head">
+                            <th>Block</th>
+                            <th>Age</th>
+                            <th>Txn</th>
+                            <th>Uncles</th>
+                            <th>Miner</th>
+                            <th>Gas Used</th>
+                            <th>Gas Limit</th>
+                            <th>Base Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {displayBlockRows()}
+                    </tbody>
+                </table>}
+        </div>
     )
+
 }
