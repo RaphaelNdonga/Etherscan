@@ -1,0 +1,19 @@
+.App-header{
+  font-family: 'Oleo Script Swash Caps', cursive;
+  max-height: fit-content;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 0.5rem;
+  padding: 0.5rem;
+}
+
+thead, tr{
+  border: 1px solid black;
+}
+
+table{
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  width: 80%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+}
